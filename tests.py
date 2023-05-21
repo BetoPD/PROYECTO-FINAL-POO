@@ -1,24 +1,25 @@
-from tkinter import *
-import battleShip as bShip
+import tkinter as tk
 
-class Main(Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry("200x200")
-        self.new_window = None
-        self.game = None
-        self.cB()
-        self.mainloop()
-    
-    def cB(self):
-        button = Button(self, text="Create Game", command=self.createGame)
-        button.pack()
-    
-    def createGame(self):
-        if self.game:
-            self.game.destroy()
-        
-        self.game = bShip.BattleShip(self)
-            
+def display_values():
+    values = [var.get() for var in vars_list]
+    print("Selected values:", values)
 
-root = Main()
+root = tk.Tk()
+
+vars_list = []
+
+for i in range(4):
+    var = tk.StringVar()
+    vars_list.append(var)
+
+    label = tk.Label(root, text="Input " + str(i+1))
+    label.pack()
+
+    for option in ["Option A", "Option B"]:
+        radio_button = tk.Radiobutton(root, text=option, variable=var, value=option)
+        radio_button.pack()
+
+button = tk.Button(root, text="Display Values", command=display_values)
+button.pack()
+
+root.mainloop()
