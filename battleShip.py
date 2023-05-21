@@ -59,6 +59,9 @@ class BattleShip(Toplevel):
         self.initializeAll()
 
     def boatSize(self):
+
+        # A text that tells the size of the boat 6 - 1
+        
         for i in range(6):
             Label(self.placeBoats, text="Boat {}".format(i + 1)).grid(column=0, row=i)
 
@@ -66,6 +69,8 @@ class BattleShip(Toplevel):
             Label(self.shotBoats, text="Shoot {}".format(i + 1)).grid(column=0, row=i)
     
     def coordinates(self):
+
+        # Entries to decide where to place the ships in the canvas
 
         self.boatSize()
 
@@ -97,6 +102,9 @@ class BattleShip(Toplevel):
         self.submitCoordinates.grid(column=1, row=6)
     
     def orientationZone(self):
+
+        # Radio Buttons to choose the orientation of the ships, either Vertical or Horizontal
+
         for i in range(6):
             var = StringVar()
             self.orientationValues.append(var)
@@ -110,16 +118,24 @@ class BattleShip(Toplevel):
 
     
     def shotZone(self):
+
+        # Creates an entry and a button to shoot enemy ships:
+
         self.shot = Entry(self.shotBoats)
         self.shot.grid(column=1, row=0)
         self.button = Button(self.shotBoats, text="SHOOOT!!")
         self.button.grid(column=0, row=1, columnspan=2)
 
     def initializeDict(self):
+
+        # Creates a dict, where you assing a number as the key, and a letter as the value
+
         for i in range(10):
             self.__dict[i] = self.__letterList[i]
     
     def placeNumberAndLetter(self):
+
+        # Creates the letters and number squares around the Battle Canvas
         
         self.initializeDict()
         
@@ -138,14 +154,13 @@ class BattleShip(Toplevel):
     
     def placeShots(self):
         
-        
+        # Function to see where you have shooted, it is a canvas, similar to the ship canvas
+
         self.canvasNumbers2 = Canvas(self.combat_zone, width=self.globalDimensions*10, height=self.globalDimensions)
         self.canvasNumbers2.grid(column=3, row=0)
 
         self.canvasLetter2 = Canvas(self.combat_zone, width=self.globalDimensions, height=self.globalDimensions * 10)
         self.canvasLetter2.grid(column=2, row=1)
-
-
 
         for i in range(10):
             self.canvasNumbers2.create_rectangle(i * self.globalDimensions, 0, (i * self.globalDimensions) + self.globalDimensions, self.globalDimensions, fill='white', outline='red')
@@ -170,16 +185,20 @@ class BattleShip(Toplevel):
 
     def getEntryValue(self):
 
+        # Creates a dictionary assingning each letter to a numeric value
+
         translate = {}
 
         for i in range(0, 10):
             translate[self.__letterList[i]] = i
-        
-        print(translate)
+
+        # If there already exist coordinates, it will restart them
 
         if self.coordinateValues:
             self.coordinateValues = []
         
+        # Checks every input, to validate the format
+
         for item in self.coordinateList:
             current_value = item.get()
             
@@ -215,6 +234,7 @@ class BattleShip(Toplevel):
             self.coordinateValues.append(coordinates)
         
 
+        # Checking if a value for Horizontal or Vertical is missing
 
         for item in self.orientationValues:
             current_o_value = item.get()
@@ -223,39 +243,37 @@ class BattleShip(Toplevel):
                 self.warningAndRestart("Missing Values")
                 return
         
-        shipsToDraw = []
+        # Validating the coordinates, in orther to see if the ship does fit in the grid, or ships are not overlapping between them
 
+        shipsToDraw = []
 
         for i, coordinate in enumerate(self.coordinateValues):
             currentShip = []
             x = coordinate[0]
             y = coordinate[1]   
-            print("Starting coordinates: ", x, ",", y)             
             startPoint =  self.myShips[0].index(x, y)
             self.myShips[startPoint].ship = True
             currentShip.append(startPoint)
             for j in range(1, 6 - i):
                 if self.orientationValues[i].get() == "H":
                     index = self.myShips[0].index(x + j, y)
-                    print(x + j, ", ", y)
                     if not index:
                         self.warningAndRestart("Ship {} does not fit".format(i + 1))
                         return
                     else:
                         if self.myShips[index].ship:
-                            self.warningAndRestart("Ships overlapping")
+                            self.warningAndRestart("Ship {} overlapping".format(i))
                             return
                         currentShip.append(index)
                         self.myShips[index].ship = True
                 else:
                     index = self.myShips[0].index(x, y + j)
-                    print(x, ", ", y + j)
                     if not index:
                         self.warningAndRestart("Ship {} does not fit".format(i + 1))
                         return
                     else:
                         if self.myShips[index].ship:
-                            self.warningAndRestart("Ships overlapping")
+                            self.warningAndRestart("Ship {} overlapping".format(i))
                             return
                         currentShip.append(index)
                         self.myShips[index].ship = True
@@ -264,8 +282,8 @@ class BattleShip(Toplevel):
 
         #DRAWING THE SHIPS
         
-        for i, ship in enumerate(shipsToDraw):
-            for j, index in enumerate(ship):
+        for ship in shipsToDraw:
+            for index in ship:
                 self.myShips[index].drawMyself(self.dx, self.dy, self.canvasMyShips, "Purple")
 
         for item in self.orientationValues:
@@ -288,13 +306,17 @@ class BattleShip(Toplevel):
             ship.ship = False
     
     def warningAndRestart(self, message = "Warning"):
+
+        # Warning function with a message
+
         messagebox.showwarning("Warning", message)
         self.coordinateValues = []
         self.restartShips()
 
-
-
     def initializeAll(self):
+
+        # Initializing all functions in order
+
         self.coordinates()
         self.orientationZone()
         self.shotZone()
