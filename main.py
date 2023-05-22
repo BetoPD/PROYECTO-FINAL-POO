@@ -1,5 +1,6 @@
 from tkinter import *
-from battleShip import *
+from battleShipSinglePlayer import *
+from multiplayerBattleShip import *
 from tkinter import messagebox
 
 window = None
@@ -9,7 +10,7 @@ def option():
     value = var.get()
 
     if not value:
-        messagebox.showwarning("Warning", "Choose an options")
+        messagebox.showwarning("Hey dude!!!", "Hey Dude!!!\nChoose an option")
         return
 
     if window:
