@@ -1,25 +1,31 @@
-import tkinter as tk
+def lineSegments(p0, p1, p2, p3):
+    A1 = p1[1] - p0[1]
+    B1 = p0[0] - p1[0]
+    C1 = A1 * p0[0] + B1 * p0[1]
+    A2 = p3[1] - p2[0]
+    B2 = p2[0] - p3[0]
+    C2 = A2 * p2[0] + B2 * p2[1]
 
-def display_values():
-    values = [var.get() for var in vars_list]
-    print("Selected values:", values)
+    print("A1:", A1, "B1:",B1,"C1:",C1)
+    print("A2:", A2, "B2:",B2,"C2:",C2)
 
-root = tk.Tk()
+    denominator = A1 * B2 - A2 * B1
+    
+    if denominator == 0:
+        return False 
+    
+    # if (C1 / B1) == (C2 / B2):
+    #     return True
+    
+    intersectx = (B2 * C1 - B1 * C2) / denominator
+    intersecty = (A1 * C2 - A2 * C1) / denominator
+    rx0 = (intersectx - p0[0]) / (p1[0] - p0[0])
+    ry0 = (intersecty - p0[1]) / (p1[1] - p0[1])
+    rx1 = (intersectx - p2[0]) / (p3[0] - p2[0])
+    ry1 = (intersecty - p2[1]) / (p3[1] - p2[1])
+    if((rx0 >= 0 and rx0 <=1) or (ry0 >= 0 and ry0 <=1)) and ((rx1 >= 0 and rx1 <=1) or (ry1 >= 0 and ry1 <=1)):
+        return True
+    else:
+        return False
 
-vars_list = []
-
-for i in range(4):
-    var = tk.StringVar()
-    vars_list.append(var)
-
-    label = tk.Label(root, text="Input " + str(i+1))
-    label.pack()
-
-    for option in ["Option A", "Option B"]:
-        radio_button = tk.Radiobutton(root, text=option, variable=var, value=option)
-        radio_button.pack()
-
-button = tk.Button(root, text="Display Values", command=display_values)
-button.pack()
-
-root.mainloop()
+print(lineSegments((0,0),(0,5),(0,1),(5,1)))

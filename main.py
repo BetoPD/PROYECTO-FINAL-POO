@@ -15,7 +15,10 @@ def option():
     if window:
         window.destroy()
 
-    window = BattleShip(gameMode=value)
+    if var.get() == 1:
+        window = SinglePlayerBattleShip()
+    else:
+        window = BattleShip()
     
 
 root = Tk()
