@@ -5,6 +5,12 @@ import pygame
 from tkinter import messagebox
 from PIL import Image, ImageTk
 
+pathMusic = "Haddaway - What Is Love (slowed).mp3"
+
+def play():
+    pygame.mixer.music.load(pathMusic)
+    pygame.mixer.music.play(-1)
+
 class BattleShip(Toplevel):
 
     def __init__(self, globalDimensions = 40):
@@ -319,8 +325,9 @@ class BattleShip(Toplevel):
 
     def onClosing(self):
         pygame.mixer.music.stop()
+        play()
         self.destroy()
-        
+
     def backGroundSound(self):
         pygame.mixer.music.load(self.imagePath)
         pygame.mixer.music.play(loops=5)

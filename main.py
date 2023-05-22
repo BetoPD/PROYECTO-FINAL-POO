@@ -2,17 +2,14 @@ from tkinter import *
 from battleShipSinglePlayer import *
 from multiplayerBattleShip import *
 
-pathVideo = "Haddaway - What Is Love (slowed).mp3"
+
 pathGift = Image.open("mike-o-hearn.gif")
 window = None
-
-def play():
-    pygame.mixer.music.load(pathVideo)
-    pygame.mixer.music.play(loops=5)
 
 def option():
     global window
     value = var.get()
+ 
     if not value:
         messagebox.showwarning("Hey dude!!!", "Hey Dude!!!\nChoose an option")
         return
@@ -20,7 +17,7 @@ def option():
     if window:
         window.destroy()
 
-    pygame.mixer.music.stop()
+    pygame.mixer.music.pause()
 
     if var.get() == 1:
         window = SinglePlayerBattleShip()
@@ -50,6 +47,7 @@ except EOFError:
     pass
 
 ###
+
 
 frame = Frame(root)
 frame.pack()
