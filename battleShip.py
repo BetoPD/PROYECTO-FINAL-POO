@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
 import random 
+import pygame
+from tkinter import messagebox
+from PIL import Image, ImageTk
 
 class BattleShip(Toplevel):
 
@@ -10,6 +13,7 @@ class BattleShip(Toplevel):
         self.y_axis = 10
         self.dx = globalDimensions
         self.dy = globalDimensions
+        self.imagePath = "sigma male playlist (motivational workout music) [TubeRipper.com].mp3"
 
         super().__init__()
         self.title("Battle Ship")
@@ -57,7 +61,7 @@ class BattleShip(Toplevel):
         self.canvasLetter2 = None
         self.myShips = None
         self.myShots = None
-
+        self.protocol("WM_DELETE_WINDOW", self.onClosing)
         self.initializeAll()
 
     def boatSize(self):
@@ -313,10 +317,18 @@ class BattleShip(Toplevel):
         self.coordinateValues = []
         self.restartShips()
 
+    def onClosing(self):
+        pygame.mixer.music.stop()
+        self.destroy()
+        
+    def backGroundSound(self):
+        pygame.mixer.music.load(self.imagePath)
+        pygame.mixer.music.play(loops=5)
+
     def initializeAll(self):
 
         # Initializing all functions in order
-
+        self.backGroundSound()
         self.coordinates()
         self.orientationZone()
         self.shotZone()
@@ -338,7 +350,7 @@ class Cell:
     
     def index(self, x, y):
         if ( x < 0 or y < 0 or x > (10 - 1) or y > (10 - 1)):
-            return False
+            return -1
 
         return x + y  * 10
     

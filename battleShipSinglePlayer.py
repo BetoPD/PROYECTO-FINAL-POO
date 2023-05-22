@@ -78,30 +78,38 @@ class SinglePlayerBattleShip(BattleShip):
             currentShip = []
             x = coordinate[0]
             y = coordinate[1]   
-            startPoint =  self.myShips[0].index(x, y)
-            self.myShips[startPoint].ship = True
-            currentShip.append(startPoint)
-            for j in range(1, 6 - i):
+            # startPoint =  self.myShips[0].index(x, y)
+            # self.myShips[startPoint].ship = True
+            # currentShip.append(startPoint)
+            for j in range(0, 6 - i):
                 if self.orientationValues[i].get() == "H":
                     index = self.myShips[0].index(x + j, y)
-                    if not index:
+                    print("Trying to insert ship at index {}".format(index))
+                    if index < 0:
                         self.warningAndRestart("Ship {} does not fit".format(i + 1))
                         return
                     else:
                         if self.myShips[index].ship:
+                            print("False")
+                            self.restartShips()
                             self.warningAndRestart("Ship {} is overlapping".format(i + 1))
                             return
+                        print("True")
                         currentShip.append(index)
                         self.myShips[index].ship = True
                 else:
                     index = self.myShips[0].index(x, y + j)
-                    if not index:
+                    print("Trying to insert ship at index {}".format(index))
+                    if index < 0:
                         self.warningAndRestart("Ship {} does not fit".format(i + 1))
                         return
                     else:
                         if self.myShips[index].ship:
+                            print("False")
+                            self.restartShips()
                             self.warningAndRestart("Ship {} is overlapping".format(i + 1))
                             return
+                        print("True")
                         currentShip.append(index)
                         self.myShips[index].ship = True 
 
@@ -222,15 +230,17 @@ class SinglePlayerBattleShip(BattleShip):
         
         randomCoordinates, randomOrientations =  self.generatingRandomThings()
 
+        botCoordinates = []
+
         for i, coordinate in enumerate(randomCoordinates):
             x = coordinate[0]
             y = coordinate[1]   
-            startPoint =  self.botShips[0].index(x, y)
-            self.botShips[startPoint].ship = True
-            for j in range(1, 6 - i):
+            # startPoint =  self.botShips[0].index(x, y)
+            # self.botShips[startPoint].ship = True
+            for j in range(0, 6 - i):
                 if randomOrientations[i] == "H":
                     index = self.botShips[0].index(x + j, y)
-                    if not index:
+                    if index < 0:
                         self.restartBotShips()
                         self.StartingBotShips()
                         return
@@ -240,9 +250,10 @@ class SinglePlayerBattleShip(BattleShip):
                             self.StartingBotShips()
                             return
                         self.botShips[index].ship = True
+                        botCoordinates.append(index)
                 else:
                     index = self.botShips[0].index(x, y + j)
-                    if not index:
+                    if index < 0:
                         self.restartBotShips()
                         self.StartingBotShips()
                         return
@@ -252,9 +263,11 @@ class SinglePlayerBattleShip(BattleShip):
                             self.StartingBotShips()
                             return
                         self.botShips[index].ship = True 
+                        botCoordinates.append(index)
         
-        print(randomCoordinates)
-
+        print("Bot ships indexes: {}".format(botCoordinates))
+        print("Bot ships orientations: {}".format(randomOrientations))
+        
     def restartBotShips(self):
         for ship in self.botShips:
             ship.ship = False
