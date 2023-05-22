@@ -1,9 +1,13 @@
 from battleShip import *
 
 class MultiPlayerBattleShip(BattleShip):
-     
-    def StartingGame(self):
 
+    def __init__(self, globalDimensions=40):
+        super().__init__(globalDimensions)
+        self.__letterList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+
+    def StartingGame(self):
+        print("uso al hijo")
         # Creates a dictionary assingning each letter to a numeric value
 
         translate = {}

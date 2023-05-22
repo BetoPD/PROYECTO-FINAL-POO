@@ -19,7 +19,7 @@ def option():
     if var.get() == 1:
         window = SinglePlayerBattleShip()
     else:
-        window = BattleShip()
+        window = MultiPlayerBattleShip()
     
 
 root = Tk()
