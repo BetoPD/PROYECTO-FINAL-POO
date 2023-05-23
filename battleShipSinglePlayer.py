@@ -191,13 +191,16 @@ class SinglePlayerBattleShip(BattleShip):
             self.myScore += 1
             if self.myScore == 21:
                 messagebox.showinfo("WOOOOOW", "YOU WON!!!")
+                self.shot.config(state="disabled")
+                self.button.config(state="disabled")
+                
         else:
             self.myShots[index].drawMyself(self.dx, self.dy, self.canvasMyShots, "purple")
         
         indexBot = self.myShips[0].index(xbot, ybot)
 
-        # print("Bot coordinates to shot: ({}, {})".format(xbot, ybot))
-        # print("Bot shoot at index:", indexBot)
+        print("Bot coordinates to shot: ({}, {})".format(xbot, ybot))
+        print("Bot shoot at index:", indexBot)
 
         if self.myShips[indexBot].ship:
             self.myShips[indexBot].symbol = "X"
@@ -206,6 +209,9 @@ class SinglePlayerBattleShip(BattleShip):
             self.myShips[indexBot].drawMyself(self.dx, self.dy, self.canvasMyShips, "red")
             if self.oponentScore == 21:
                 messagebox.showinfo("WOOOOOW", "BOT WON!!!")
+                self.shot.config(state="disabled")
+                self.button.config(state="disabled")
+
         else:
             messagebox.showinfo("Bot Shooted", "Bot missed at position ({},{})".format(xbot, ybot))
             self.myShips[indexBot].drawMyself(self.dx, self.dy, self.canvasMyShips, "green")

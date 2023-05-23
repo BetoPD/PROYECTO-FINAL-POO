@@ -1,7 +1,6 @@
 from tkinter import *
 from battleShipSinglePlayer import *
-from multiplayerBattleShip import *
-
+# from multiplayerBattleShip import *
 
 pathGift = Image.open("mike-o-hearn.gif")
 window = None
@@ -22,7 +21,8 @@ def option():
     if var.get() == 1:
         window = SinglePlayerBattleShip()
     else:
-        window = MultiPlayerBattleShip()
+        messagebox.showwarning("Hey dude!!!", "Hey Dude!!!\nChoose an option")
+        # window = MultiPlayerBattleShip()
     
 
 root = Tk()
@@ -61,10 +61,10 @@ label.grid(column=1, row=0)
 var = IntVar()
 
 radio_button_1 = Radiobutton(labelFrame, text="Player vs Computer", variable=var, value=1)
-radio_button_1.grid(column=0, row=1)
+radio_button_1.grid(column=1, row=1)
 
-radio_button_2 = Radiobutton(labelFrame, text="Player vs Player", variable=var, value=2)
-radio_button_2.grid(column=2, row=1)
+# radio_button_2 = Radiobutton(labelFrame, text="Player vs Player", variable=var, value=2)
+# radio_button_2.grid(column=2, row=1)
 
 button = Button(labelFrame, text="PLAY!!", command=option)
 button.grid(column=1, row=2)
