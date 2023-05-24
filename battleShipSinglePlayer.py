@@ -203,6 +203,12 @@ class SinglePlayerBattleShip(BattleShip):
         print("Bot shoot at index:", indexBot)
 
         if self.myShips[indexBot].ship:
+            
+            while self.myShips[indexBot].symbol == "X":
+                xbot = random.randint(0, 9)
+                ybot = random.randint(0, 9)
+                indexBot = self.myShips[0].index(xbot, ybot)
+            
             self.myShips[indexBot].symbol = "X"
             messagebox.showinfo("BOT HITTED", "Bot hit at position ({},{})".format(xbot, ybot))
             self.oponentScore += 1
