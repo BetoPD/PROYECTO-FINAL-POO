@@ -155,11 +155,11 @@ class SinglePlayerBattleShip(BattleShip):
         current_value = self.shot.get()
         
         if (len(current_value) > 2 or not current_value) and current_value[1:] != "10":
-            self.warningAndRestart("Incorrect length")
+            self.warningMessage("Incorrect length")
             return
         
         if type(current_value[0]) != str:
-            self.warningAndRestart("Input not letter")
+            self.warningMessage("Input not letter")
             return
         
         numericValue = current_value[1:]
@@ -167,14 +167,14 @@ class SinglePlayerBattleShip(BattleShip):
         numbersStrings = [str(i) for i in range(1, 11)]
 
         if numericValue not in numbersStrings:
-            self.warningAndRestart("Wrong numbers")
+            self.warningMessage("Wrong numbers")
             return
         
         x = int(numericValue)
         y = current_value[0].upper()
 
         if y not in self.__letterList:
-            self.warningAndRestart("Wrong inputs")
+            self.warningMessage("Wrong inputs")
             return
         
         coordinates  = (x - 1, translate[y])
@@ -185,6 +185,9 @@ class SinglePlayerBattleShip(BattleShip):
         index = self.myShips[0].index(coordinates[0], coordinates[1])
 
         if self.botShips[index].ship:
+            if self.botShips[index].symbol == "X":
+                self.warningMessage("You can't shoot at the same position!!!")
+                return
             self.botShips[index].symbol = "X"
             self.myShots[index].drawMyself(self.dx, self.dy, self.canvasMyShots, "red")
             messagebox.showinfo("HIT!!", "PLAYER 1 hitted at position ({},{})".format(x, y))

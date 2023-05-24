@@ -323,6 +323,9 @@ class BattleShip(Toplevel):
         self.coordinateValues = []
         self.restartShips()
 
+    def warningMessage(self, message = "Warning"):
+        messagebox.showwarning("Warning", message)
+
     def onClosing(self):
         pygame.mixer.music.stop()
         play()

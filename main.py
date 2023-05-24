@@ -29,7 +29,7 @@ def option():
 root = Tk()
 root.title("Main Menu")
 root.geometry("600x600")
-root.iconbitmap("/Users/humbertoangelplataduran/Desktop/PROYECTO FINAL POO/pb.ico")
+root.iconbitmap("pb.ico")
 pygame.mixer.init()
 play()
 
